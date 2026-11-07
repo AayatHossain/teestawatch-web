@@ -4,6 +4,8 @@
 
 Team Phantom Troupe · NASA Space Apps Challenge 2026 · Rangpur, Bangladesh · Challenge: *Dancing with the SARs*
 
+### 🌐 Live website: **https://aayathossain.github.io/teestawatch-web/**
+
 TeestaWatch shows where the Teesta has flooded, how fast it is eating its banks, where it is set to strike next year, and the chance that it reaches each village and home within 1, 3 or 5 years.
 
 ---
@@ -76,10 +78,7 @@ npm run preview    # check the built site locally
 
 `dist/` is a plain static website. It uses relative paths and `#` page links, so it works from any web address with no server set-up.
 
-- **GitHub Pages** (the repository must be public, or on a paid plan):
-  1. Run `npm run build`.
-  2. Publish the contents of `dist/` to a `gh-pages` branch, for example with `npx gh-pages -d dist`.
-  3. In the repository go to *Settings → Pages* and choose that branch.
+- **GitHub Pages (set up already):** every push to `main` rebuilds and republishes the site automatically, using `.github/workflows/deploy.yml`. Progress is on the repository's **Actions** tab. Changes appear at the live link within about 2 minutes.
 - **Netlify or Vercel:** import the repository with build command `npm run build` and output folder `dist`. Or drag the `dist/` folder onto [app.netlify.com/drop](https://app.netlify.com/drop).
 
 ---
