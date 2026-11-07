@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: dark; }
+html { scroll-behavior: smooth; }
+body {
+  @apply bg-ink-950 text-slate-200 font-sans antialiased;
+  overflow-x: hidden;
+}
+::selection { background: rgba(34, 211, 238, 0.35); }
+* { scrollbar-width: thin; scrollbar-color: #1b2744 transparent; }
+
+@layer components {
+  .glass {
+    @apply bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-3xl;
+    box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.06), 0 20px 60px -20px rgba(0,0,0,0.6);
+  }
+  .glass-strong {
+    @apply bg-ink-900/75 backdrop-blur-2xl border border-white/10 rounded-3xl;
+    box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.06), 0 30px 80px -30px rgba(0,0,0,0.8);
+  }
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(110deg, #e0f2fe 10%, #67e8f9 40%, #38bdf8 60%, #e0f2fe 90%);
+    background-size: 200% auto;
+    animation: shimmer 6s linear infinite;
+  }
+  .text-gradient-warm {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(110deg, #fed7aa 10%, #fb923c 45%, #f43f5e 70%, #fed7aa 95%);
+    background-size: 200% auto;
+    animation: shimmer 7s linear infinite;
+  }
+  .chip {
+    @apply inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium tracking-wide text-slate-300;
+  }
+  .btn {
+    @apply inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-300;
+  }
+  .btn-primary {
+    @apply btn bg-gradient-to-r from-flood-400 to-river-500 text-ink-950 hover:shadow-glow hover:-translate-y-0.5;
+  }
+  .btn-ghost {
+    @apply btn border border-white/15 bg-white/5 text-slate-100 hover:bg-white/10 hover:-translate-y-0.5;
+  }
+  .label { @apply text-[11px] uppercase tracking-[0.18em] text-slate-400; }
+}
+
+/* MapLibre */
+.maplibregl-ctrl-attrib { background: rgba(3,6,13,0.55) !important; color: #94a3b8 !important; font-size: 10px !important; }
+.maplibregl-ctrl-attrib a { color: #94a3b8 !important; }
+.maplibregl-ctrl-group { background: rgba(11,19,36,0.85) !important; border: 1px solid rgba(255,255,255,0.08) !important; border-radius: 14px !important; overflow: hidden; }
+.maplibregl-ctrl-group button .maplibregl-ctrl-icon { filter: invert(1); }
+.maplibregl-popup-content { background: transparent !important; box-shadow: none !important; padding: 0 !important; }
+.maplibregl-popup-tip { display: none; }
+
+input[type='range'].slider { -webkit-appearance: none; appearance: none; height: 6px; border-radius: 999px; background: rgba(255,255,255,0.1); outline: none; }
+input[type='range'].slider::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle, #e0f2fe 0 30%, #22d3ee 32% 100%); box-shadow: 0 0 0 6px rgba(34,211,238,0.18), 0 0 24px rgba(34,211,238,0.7); cursor: pointer; transition: transform .2s; }
+input[type='range'].slider::-webkit-slider-thumb:hover { transform: scale(1.15); }
+input[type='range'].slider::-moz-range-thumb { width: 22px; height: 22px; border: 0; border-radius: 50%; background: #22d3ee; box-shadow: 0 0 24px rgba(34,211,238,0.7); cursor: pointer; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
