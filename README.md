@@ -59,8 +59,8 @@ The menu at the top switches between five pages. Everything works with a mouse o
 You need **Node.js 18 or newer** ([nodejs.org](https://nodejs.org)).
 
 ```bash
-git clone https://github.com/AayatHossain/teestawatch.git
-cd teestawatch
+git clone https://github.com/AayatHossain/teestawatch-web.git
+cd teestawatch-web
 npm install        # first time only
 npm run dev        # then open the link it prints, e.g. http://localhost:5173
 ```
