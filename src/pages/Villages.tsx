@@ -245,12 +245,12 @@ export default function Villages() {
           </AnimatePresence>
         </div>
 
-        <div className="mt-4 flex gap-2">
+        <div className="mt-3 flex flex-wrap gap-1 md:mt-4 md:gap-1.5">
           {(['All', 'High', 'Medium', 'Low'] as const).map((f) => (
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold transition-all ${
+              className={`flex items-center gap-1 whitespace-nowrap rounded-full border px-2 py-1.5 text-[11px] font-semibold transition-all md:gap-1.5 md:px-2.5 md:text-xs ${
                 filter === f ? 'border-white/30 bg-white/15 text-white' : 'border-white/10 text-slate-400 hover:text-white'
               }`}
             >
