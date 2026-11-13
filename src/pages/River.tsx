@@ -55,7 +55,11 @@ export default function River() {
   }, [playing, year])
 
   const lost = s?.land_lost_by_year.find((r) => r.year === year)?.ha ?? 0
-  const cumulative = s ? s.land_lost_by_year.filter((r) => r.year <= Math.min(year, 2026)).reduce((a, r) => a + r.ha, 0) : 0
+  const cumulative = s
+    ? year >= 2026
+      ? s.land_lost_total_ha
+      : s.land_lost_by_year.filter((r) => r.year <= year).reduce((a, r) => a + r.ha, 0)
+    : 0
   const isF = year === FORECAST
 
   return (
@@ -89,7 +93,7 @@ export default function River() {
                   </div>
                 </div>
                 <p className="mt-5 text-sm leading-relaxed text-slate-400">
-                  Our deep-learning forecast reads ten years of satellite history to predict the land most likely to be lost in {FORECAST} — about{' '}
+                  Our deep-learning forecast reads ten years of satellite history to predict the land most likely to be lost over the next year — about{' '}
                   <span className="font-semibold text-white">{fmt(s.forecast_2027.expected_ha)} ha</span> in total.
                 </p>
               </>
