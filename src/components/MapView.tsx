@@ -61,7 +61,8 @@ export default function MapView({ className = '', interactive = true, center, zo
       bearing,
       interactive,
       attributionControl: { compact: true },
-      maxBounds: [[87.9, 24.6], [90.7, 27.1]],
+      // panning limit; generous enough that a phone (map partly under a bottom panel) can still frame the whole river
+      maxBounds: [[86.6, 22.8], [92.0, 28.6]],
       fadeDuration: 300,
     })
     if (fitTeesta && !center) map.fitBounds(TEESTA_BOUNDS, { padding: 40, duration: 0 })

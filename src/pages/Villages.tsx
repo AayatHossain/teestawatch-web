@@ -5,7 +5,25 @@ import maplibregl, { type Map as MLMap } from 'maplibre-gl'
 import { Home as HomeIcon, MapPin, Ruler, Search, Users, X } from 'lucide-react'
 import MapView from '../components/MapView'
 import { Counter } from '../components/ui'
-import { asset, useStats, useVillages, fmt, type Village } from '../lib/data'
+import { asset, useStats, useVillages, fmt, TEESTA_BOUNDS, type Village } from '../lib/data'
+
+const isPhone = () => window.innerWidth < 768 // Tailwind md breakpoint, where the panel becomes a bottom sheet
+
+/** Map padding so the camera centres on the part of the map that is not under the panel.
+ *  Phones: the panel covers the lower part of the screen, so pad the bottom by its height.
+ *  md and up: no padding (desktop behaviour unchanged). */
+function viewPadding() {
+  if (!isPhone()) return { top: 0, bottom: 0, left: 0, right: 0 }
+  const panelTop = document.querySelector('aside')?.getBoundingClientRect().top ?? window.innerHeight * 0.46
+  return { top: 72, bottom: Math.max(0, Math.round(window.innerHeight - panelTop)) + 8, left: 12, right: 12 }
+}
+
+/** Pixel offset that puts a flyTo target in the middle of the visible strip. An offset (unlike flyTo's `padding`,
+ *  which MapLibre keeps for later camera moves) applies to this move only, so the zoom-out on close still works. */
+function viewOffset(): [number, number] {
+  const p = viewPadding()
+  return [(p.left - p.right) / 2, (p.top - p.bottom) / 2]
+}
 
 const RISK_COLOR = { High: '#ef4444', Medium: '#facc15', Low: '#34d399' } as const
 const ORDER = { High: 0, Medium: 1, Low: 2 } as const
@@ -128,6 +146,8 @@ export default function Villages() {
       const [lon, lat] = (f.geometry as unknown as { coordinates: [number, number] }).coordinates
       setSel({ ...p, lon, lat })
     })
+    // phones: start with the whole river in the visible top part of the screen
+    if (isPhone()) m.fitBounds(TEESTA_BOUNDS, { padding: viewPadding(), duration: 0 })
     setReady(true)
   }
 
@@ -141,7 +161,7 @@ export default function Villages() {
   useEffect(() => {
     const m = map.current
     if (!m || !sel) return
-    m.flyTo({ center: [sel.lon, sel.lat], zoom: 14.2, pitch: 50, bearing: -15, duration: 2600, essential: true })
+    m.flyTo({ center: [sel.lon, sel.lat], zoom: 14.2, pitch: 50, bearing: -15, duration: 2600, essential: true, offset: viewOffset() })
     marker.current?.remove()
     const el = document.createElement('div')
     el.className = 'relative h-5 w-5'
@@ -152,7 +172,10 @@ export default function Villages() {
   const clear = () => {
     setSel(null)
     marker.current?.remove()
-    map.current?.flyTo({ center: [89.29, 25.86], zoom: 8.9, pitch: 0, bearing: 0, duration: 2200 })
+    const m = map.current
+    if (!m) return
+    if (isPhone()) m.fitBounds(TEESTA_BOUNDS, { padding: viewPadding(), pitch: 0, bearing: 0, duration: 2200 })
+    else m.flyTo({ center: [89.29, 25.86], zoom: 8.9, pitch: 0, bearing: 0, duration: 2200 })
   }
 
   return (
