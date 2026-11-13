@@ -57,10 +57,10 @@ export default function Floods() {
         initial={{ opacity: 0, x: -40 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.2, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-        className="glass-strong absolute bottom-4 left-4 top-24 z-10 flex w-[min(400px,calc(100%-2rem))] flex-col overflow-y-auto p-6"
+        className="glass-strong absolute bottom-3 left-3 right-3 top-[46svh] z-10 flex flex-col overflow-y-auto p-4 md:bottom-4 md:left-4 md:right-auto md:top-24 md:w-[min(400px,calc(100%-2rem))] md:p-6"
       >
         <div className="label text-flood-300">Flood maps</div>
-        <h1 className="mt-2 font-display text-3xl font-semibold leading-tight text-white">Where the water went</h1>
+        <h1 className="mt-1 font-display text-2xl font-semibold leading-tight text-white md:mt-2 md:text-3xl">Where the water went</h1>
 
         <div className="mt-6 grid grid-cols-4 gap-2">
           {s?.floods.map((f, i) => (

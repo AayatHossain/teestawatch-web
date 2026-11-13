@@ -117,3 +117,7 @@ React 19 · TypeScript · Vite · Tailwind CSS · Framer Motion · MapLibre GL J
 | Administrative boundaries | geoBoundaries |
 | Place names | OpenStreetMap |
 | Basemap imagery and labels | © Esri, Maxar, Earthstar Geographics |
+
+## License
+
+MIT License. See [LICENSE](LICENSE). Data sources keep their own licenses and terms (listed above).

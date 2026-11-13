@@ -166,12 +166,12 @@ export default function Villages() {
         initial={{ opacity: 0, x: -40 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.2, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-        className="glass-strong absolute bottom-4 left-4 top-24 z-10 flex w-[min(420px,calc(100%-2rem))] flex-col p-6"
+        className="glass-strong absolute bottom-3 left-3 right-3 top-[46svh] z-10 flex flex-col p-4 md:bottom-4 md:left-4 md:right-auto md:top-24 md:w-[min(420px,calc(100%-2rem))] md:p-6"
       >
         <div className="label text-rose-400">Villages at risk</div>
-        <h1 className="mt-2 font-display text-3xl font-semibold leading-tight text-white">Is the river coming?</h1>
+        <h1 className="mt-1 font-display text-2xl font-semibold leading-tight text-white md:mt-2 md:text-3xl">Is the river coming?</h1>
 
-        <div className="relative mt-5">
+        <div className="relative mt-3 md:mt-5">
           <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
             value={q}
@@ -185,6 +185,11 @@ export default function Villages() {
             <button onClick={() => setQ('')} className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1 text-slate-400 hover:text-white" aria-label="Clear search">
               <X size={16} />
             </button>
+          )}
+          {focus && q.trim().length >= 2 && results.length === 0 && (
+            <div className="absolute left-0 right-0 top-full z-20 mt-2 rounded-2xl border border-white/10 bg-ink-800/95 px-4 py-3 text-sm text-slate-400 backdrop-blur-xl">
+              No village found. Try another spelling, or a union or upazila name.
+            </div>
           )}
           <AnimatePresence>
             {focus && results.length > 0 && (
