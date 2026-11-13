@@ -5,8 +5,8 @@ import { CalendarDays, Pause, Play } from 'lucide-react'
 import type { Map as MLMap } from 'maplibre-gl'
 import MapView from '../components/MapView'
 import { Counter, Legend } from '../components/ui'
-import { loadJSON, useStats, fmt, type Stats } from '../lib/data'
-import { addImage, setOpacity } from '../lib/map'
+import { loadJSON, useStats, fmt, TEESTA_BOUNDS, type Stats } from '../lib/data'
+import { addImage, isPhone, setOpacity, viewPadding } from '../lib/map'
 
 const day = (d: string) => new Date(d + 'T00:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
 
@@ -20,6 +20,8 @@ export default function Floods() {
 
   const onLoad = async (m: MLMap) => {
     map.current = m
+    // phones: frame the whole river in the visible strip above the bottom panel
+    if (isPhone()) m.fitBounds(TEESTA_BOUNDS, { padding: viewPadding(), duration: 0 })
     const st = await loadJSON<Stats>('data/stats.json')
     st.floods.forEach((f) => {
       addImage(m, `${f.id}_before`, `flood/${f.id}_before.png`, st.overlays[`flood/${f.id}_before.png`], 0)

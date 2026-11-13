@@ -6,17 +6,7 @@ import { Home as HomeIcon, MapPin, Ruler, Search, Users, X } from 'lucide-react'
 import MapView from '../components/MapView'
 import { Counter } from '../components/ui'
 import { asset, useStats, useVillages, fmt, TEESTA_BOUNDS, type Village } from '../lib/data'
-
-const isPhone = () => window.innerWidth < 768 // Tailwind md breakpoint, where the panel becomes a bottom sheet
-
-/** Map padding so the camera centres on the part of the map that is not under the panel.
- *  Phones: the panel covers the lower part of the screen, so pad the bottom by its height.
- *  md and up: no padding (desktop behaviour unchanged). */
-function viewPadding() {
-  if (!isPhone()) return { top: 0, bottom: 0, left: 0, right: 0 }
-  const panelTop = document.querySelector('aside')?.getBoundingClientRect().top ?? window.innerHeight * 0.46
-  return { top: 72, bottom: Math.max(0, Math.round(window.innerHeight - panelTop)) + 8, left: 12, right: 12 }
-}
+import { isPhone, viewPadding } from '../lib/map'
 
 /** Pixel offset that puts a flyTo target in the middle of the visible strip. An offset (unlike flyTo's `padding`,
  *  which MapLibre keeps for later camera moves) applies to this move only, so the zoom-out on close still works. */
