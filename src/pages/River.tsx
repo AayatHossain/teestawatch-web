@@ -74,15 +74,15 @@ export default function River() {
         initial={{ opacity: 0, x: 40 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.25, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-        className="glass-strong absolute right-4 top-24 z-10 w-[min(360px,calc(100%-2rem))] p-6"
+        className="glass-strong absolute left-3 right-3 top-20 z-10 p-4 md:left-auto md:right-4 md:top-24 md:w-[min(360px,calc(100%-2rem))] md:p-6"
       >
         <div className={`label ${isF ? 'text-rose-400' : 'text-erosion-400'}`}>{isF ? 'Next year' : 'Riverbank & erosion'}</div>
         <AnimatePresence mode="wait">
           <motion.div key={isF ? 'f' : 'p'} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.4 }}>
             {isF && s ? (
               <>
-                <h1 className="mt-2 font-display text-3xl font-semibold leading-tight text-white">Where the river strikes next</h1>
-                <div className="mt-6 grid grid-cols-2 gap-3">
+                <h1 className="mt-1 font-display text-2xl font-semibold leading-tight text-white md:mt-2 md:text-3xl">Where the river strikes next</h1>
+                <div className="mt-4 grid grid-cols-2 gap-3 md:mt-6">
                   <div className="rounded-2xl border border-rose-500/40 bg-rose-500/10 p-4">
                     <div className="font-display text-3xl font-semibold text-white"><Counter value={s.forecast_2027.high_ha} /> ha</div>
                     <div className="text-xs text-rose-200">high-risk land</div>
@@ -92,21 +92,21 @@ export default function River() {
                     <div className="text-xs text-amber-200">medium-risk land</div>
                   </div>
                 </div>
-                <p className="mt-5 text-sm leading-relaxed text-slate-400">
+                <p className="mt-4 text-sm leading-relaxed text-slate-400 md:mt-5">
                   Our deep-learning forecast reads ten years of satellite history to predict the land most likely to be lost over the next year — about{' '}
                   <span className="font-semibold text-white">{fmt(s.forecast_2027.expected_ha)} ha</span> in total.
                 </p>
               </>
             ) : (
               <>
-                <h1 className="mt-2 font-display text-3xl font-semibold leading-tight text-white">A river on the move</h1>
-                <div className="mt-6">
+                <h1 className="mt-1 font-display text-2xl font-semibold leading-tight text-white md:mt-2 md:text-3xl">A river on the move</h1>
+                <div className="mt-4 md:mt-6">
                   <div className="label">Land taken in {year}</div>
-                  <div className="mt-1 font-display text-5xl font-semibold tracking-tight text-gradient-warm">
+                  <div className="mt-1 font-display text-4xl font-semibold tracking-tight text-gradient-warm md:text-5xl">
                     {year === 2016 ? '—' : <><Counter key={year} value={lost} duration={1} /> <span className="text-xl text-slate-300">ha</span></>}
                   </div>
                 </div>
-                <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4">
+                <div className="mt-3 rounded-2xl border border-white/10 bg-white/5 p-3 md:mt-4 md:p-4">
                   <div className="text-xs text-slate-400">Total since 2016</div>
                   <div className="font-display text-2xl font-semibold text-white">{fmt(cumulative)} ha</div>
                   <div className="text-xs text-slate-500">≈ {fmt(Math.round(cumulative * 1.4))} football pitches</div>
@@ -115,7 +115,7 @@ export default function River() {
             )}
           </motion.div>
         </AnimatePresence>
-        <div className="mt-5">
+        <div className="mt-4 md:mt-5">
           {isF ? (
             <Legend items={[{ color: '#ef4444', label: 'High risk' }, { color: '#facc15', label: 'Medium risk' }, { color: '#38bdf8', label: 'River today' }]} />
           ) : (
@@ -125,22 +125,22 @@ export default function River() {
       </motion.aside>
 
       {/* timeline */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-4 z-10 flex justify-center px-4">
+      <div className="pointer-events-none absolute inset-x-0 bottom-3 z-10 flex justify-center px-3 md:bottom-4 md:px-4">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-        className="glass-strong pointer-events-auto w-full max-w-[980px] p-5"
+        className="glass-strong pointer-events-auto w-full max-w-[980px] p-3 md:p-5"
       >
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-3 md:gap-5">
           <button
             onClick={() => setPlaying(!playing)}
-            className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-gradient-to-br from-flood-300 to-river-500 text-ink-950 shadow-glow transition-transform hover:scale-105"
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gradient-to-br from-flood-300 to-river-500 text-ink-950 shadow-glow transition-transform hover:scale-105 md:h-12 md:w-12"
             aria-label={playing ? 'Pause' : 'Play'}
           >
             {playing ? <Pause size={20} /> : <Play size={20} className="ml-0.5" />}
           </button>
-          <div className="w-24 shrink-0">
+          <div className="w-[4.5rem] shrink-0 md:w-24">
             <AnimatePresence mode="wait">
               <motion.div
                 key={year}
@@ -148,13 +148,13 @@ export default function River() {
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: -16, opacity: 0 }}
                 transition={{ duration: 0.18 }}
-                className={`font-display text-4xl font-semibold ${isF ? 'text-rose-400' : 'text-white'}`}
+                className={`font-display text-3xl font-semibold md:text-4xl ${isF ? 'text-rose-400' : 'text-white'}`}
               >
                 {year}
               </motion.div>
             </AnimatePresence>
           </div>
-          <div className="flex-1">
+          <div className="min-w-0 flex-1">
             <input
               type="range"
               min={2016}
@@ -167,7 +167,16 @@ export default function River() {
               className="slider w-full"
               aria-label="Year"
             />
-            <div className="mt-2 flex justify-between text-[11px] text-slate-500">
+            {/* phones: four tappable marks instead of 12 cramped labels */}
+            <div className="mt-2 flex justify-between text-[11px] text-slate-500 md:hidden">
+              {[2016, 2021, 2026, FORECAST].map((y) => (
+                <button key={y} onClick={() => { setPlaying(false); setYear(y) }} className={`transition-colors hover:text-white ${y === year ? 'text-white' : ''} ${y === FORECAST ? 'flex items-center gap-0.5 text-rose-400' : ''}`}>
+                  {y === FORECAST && <Sparkles size={10} />}
+                  {y}
+                </button>
+              ))}
+            </div>
+            <div className="mt-2 hidden justify-between text-[11px] text-slate-500 md:flex">
               {[...YEARS, FORECAST].map((y) => (
                 <button key={y} onClick={() => { setPlaying(false); setYear(y) }} className={`transition-colors hover:text-white ${y === year ? 'text-white' : ''} ${y === FORECAST ? 'flex items-center gap-0.5 text-rose-400' : ''}`}>
                   {y === FORECAST && <Sparkles size={10} />}
