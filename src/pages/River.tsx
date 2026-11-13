@@ -62,6 +62,23 @@ export default function River() {
     : 0
   const isF = year === FORECAST
 
+  // The slider thumb (22 px, see .slider in index.css) travels from 11 px to (width - 11 px),
+  // so a year's label is centred at 11px + (100% - 22px) * fraction-of-the-range.
+  const tick = (y: number) => (
+    <button
+      key={y}
+      onClick={() => {
+        setPlaying(false)
+        setYear(y)
+      }}
+      style={{ left: `calc(11px + (100% - 22px) * ${(y - 2016) / (FORECAST - 2016)})` }}
+      className={`absolute top-0 flex -translate-x-1/2 items-center gap-0.5 whitespace-nowrap transition-colors hover:text-white ${y === year ? 'text-white' : ''} ${y === FORECAST ? 'text-rose-400' : ''}`}
+    >
+      {y === FORECAST && <Sparkles size={10} />}
+      {y}
+    </button>
+  )
+
   return (
     <section className="relative h-[100svh] w-full overflow-hidden">
       <div className="absolute inset-0">
@@ -167,23 +184,10 @@ export default function River() {
               className="slider w-full"
               aria-label="Year"
             />
-            {/* phones: four tappable marks instead of 12 cramped labels */}
-            <div className="mt-2 flex justify-between text-[11px] text-slate-500 md:hidden">
-              {[2016, 2021, 2026, FORECAST].map((y) => (
-                <button key={y} onClick={() => { setPlaying(false); setYear(y) }} className={`transition-colors hover:text-white ${y === year ? 'text-white' : ''} ${y === FORECAST ? 'flex items-center gap-0.5 text-rose-400' : ''}`}>
-                  {y === FORECAST && <Sparkles size={10} />}
-                  {y}
-                </button>
-              ))}
-            </div>
-            <div className="mt-2 hidden justify-between text-[11px] text-slate-500 md:flex">
-              {[...YEARS, FORECAST].map((y) => (
-                <button key={y} onClick={() => { setPlaying(false); setYear(y) }} className={`transition-colors hover:text-white ${y === year ? 'text-white' : ''} ${y === FORECAST ? 'flex items-center gap-0.5 text-rose-400' : ''}`}>
-                  {y === FORECAST && <Sparkles size={10} />}
-                  {y}
-                </button>
-              ))}
-            </div>
+            {/* year labels sit exactly under the slider position for that year
+                (phones: four marks spaced so labels never collide; md and up: every year) */}
+            <div className="relative mt-2 h-4 text-[11px] text-slate-500 md:hidden">{[2016, 2020, 2024, FORECAST].map(tick)}</div>
+            <div className="relative mt-2 hidden h-4 text-[11px] text-slate-500 md:block">{[...YEARS, FORECAST].map(tick)}</div>
           </div>
         </div>
         {s && (
