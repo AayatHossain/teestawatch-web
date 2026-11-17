@@ -1,121 +1,96 @@
-# TeestaWatch
+# TeestaWatch Website
 
-**Flood maps, riverbank erosion and village risk for the Teesta River in Bangladesh, built from NASA Earth observation data.**
+**An interactive map website that shows where the Teesta River has flooded, which land it will take next, and which villages are in its path.**
 
-### 🌐 Live website: **https://aayathossain.github.io/teestawatch-web/**
+**Live demo: https://aayathossain.github.io/teestawatch-web/**
 
-TeestaWatch shows where the Teesta has flooded, how fast it is eating its banks, where it is set to strike next year, and the chance that it reaches each village and home within 1, 3 or 5 years.
+This is the front end of [TeestaWatch](https://github.com/AayatHossain/teestawatch). The AI models and the satellite data pipeline that produce every map and number live in that repository.
 
----
+## Screenshots
 
-## How to use the website
+<div align="center">
+  <img src="docs/screens/home.jpg" width="48%" alt="TeestaWatch home">&nbsp;<img src="docs/screens/floods.jpg" width="48%" alt="Flood maps">
+  <br>
+  <img src="docs/screens/riverbank.jpg" width="48%" alt="2027 erosion forecast">&nbsp;<img src="docs/screens/villages.jpg" width="48%" alt="Villages at risk">
+</div>
 
-The menu at the top switches between five pages. Everything works with a mouse or a finger. On the maps:
-- **scroll** to zoom;
-- **drag** to move;
-- **right-click and drag** (or two-finger drag) to tilt and rotate.
+## What the website shows
 
-### 1. Home
-- The opening view is a live 3D satellite map of the Teesta that slowly turns.
-- Scroll down for the key numbers and the three main features.
-- **Find your village** takes you straight to the village search.
+| Page | What you see | What you can do |
+|---|---|---|
+| **Home** | A 3D satellite view of the Teesta and the key numbers | Jump straight to the village search |
+| **Floods** | Flood water mapped from radar for the 2017, 2020, 2024 and 2025 floods | Switch between before and during each flood, and compare all four |
+| **Riverbank** | The river's course every year from 2016 to 2026, the land it took, and the 2027 forecast | Play the years as an animation, or pick any year |
+| **Villages** | 7,664 settlements coloured by risk: high, medium or low | Search a village, union or upazila, filter by risk, and zoom in to single homes |
+| **How it works** | How satellite data becomes these maps, and how well each part was tested | Read the four steps |
 
-### 2. Floods — *where the water went*
-1. Choose a flood at the top of the panel: **2017, 2020, 2024 or 2025**.
-2. The map switches between **Before** and **During flood** by itself. Press a button to choose one, or **⏸** to stop the switching.
-3. **Dark blue** is the normal river; **bright cyan** is new flood water.
-4. The panel shows how much land was newly flooded, and the water area before and during the flood.
-5. The small bar chart compares all four floods. Click a bar to open that flood.
+Every page works with a mouse or a finger. On the maps, scroll to zoom, drag to move, and right-click drag (or two-finger drag) to tilt.
 
-### 3. Riverbank — *a river on the move*
-1. Press **▶ Play** to watch the river from **2016 to 2026**, or drag the slider or click a year.
-2. **Blue** is the river channel that year; **orange** is land the river has taken since 2016.
-3. The panel shows the land taken that year and the total since 2016. The chart at the bottom shows every year at a glance.
-4. Choose **2027** to see the forecast. The map flies to the most threatened stretch and shows next year's **high-risk (red)** and **medium-risk (yellow)** land, with the hectares at risk.
+## Built with
 
-### 4. Villages — *is the river coming?*
-1. Type a **village, union or upazila** name in the search box and pick a result. The map flies there.
-2. Or click any dot on the map. Dot colours:
-   - 🔴 **High risk**: within 400 m of the river, or the river is expected within 2 years;
-   - 🟡 **Medium risk**: within 1 km, or within 5 years;
-   - 🟢 **Low risk**.
-3. The village card shows:
-   - the **chance the river reaches it** within **1, 3 and 5 years**;
-   - the number of **homes**;
-   - the **distance to the river**;
-   - **how many homes are within the river's reach** in 5 years.
-4. Use the **High / Medium / Low** buttons to show only one risk level.
-5. **Zoom in close** to see individual homes, coloured by their own risk.
-6. With no village selected, the panel lists the **most exposed settlements**. Click one to jump to it. Press **✕** to go back to the whole river.
-
-### 5. How it works
-- How the satellite data becomes these maps, in four steps.
-- How accurately each part was tested on real past events.
-
----
+| Area | Tools |
+|---|---|
+| Framework | React 19, TypeScript, Vite |
+| Maps | MapLibre GL JS with satellite imagery |
+| Styling and animation | Tailwind CSS, Framer Motion, GSAP |
+| Charts and search | Recharts, Fuse.js (typo-tolerant village search) |
+| Hosting | GitHub Pages, deployed by GitHub Actions on every push |
 
 ## Run it on your computer
 
-You need **Node.js 18 or newer** ([nodejs.org](https://nodejs.org)).
+You need [Node.js](https://nodejs.org) 18 or newer.
 
 ```bash
 git clone https://github.com/AayatHossain/teestawatch-web.git
 cd teestawatch-web
-npm install        # first time only
-npm run dev        # then open the link it prints, e.g. http://localhost:5173
+npm install
+npm run dev        # open the link it prints, e.g. http://localhost:5173
 ```
 
-To make the finished website:
+To build the finished site:
 
 ```bash
-npm run build      # creates the dist/ folder
-npm run preview    # check the built site locally
+npm run build      # creates dist/
+npm run preview    # checks the built site locally
 ```
 
-## Put it online
+`dist/` is a plain static site with relative paths, so it runs from any web address with no server set-up.
 
-`dist/` is a plain static website. It uses relative paths and `#` page links, so it works from any web address with no server set-up.
+## Deployment
 
-- **GitHub Pages (set up already):** every push to `main` rebuilds and republishes the site automatically, using `.github/workflows/deploy.yml`. Progress is on the repository's **Actions** tab. Changes appear at the live link within about 2 minutes.
-- **Netlify or Vercel:** import the repository with build command `npm run build` and output folder `dist`. Or drag the `dist/` folder onto [app.netlify.com/drop](https://app.netlify.com/drop).
+Every push to `main` rebuilds the site and publishes it to GitHub Pages through [.github/workflows/deploy.yml](.github/workflows/deploy.yml). The new version is live within about two minutes.
 
----
-
-## What's inside
+## Repository layout
 
 ```
-public/data/          all map layers and numbers used by the site (~8 MB)
-  stats.json          headline numbers, flood areas, land lost per year, forecast, accuracy
-  flood/*.png         flood water overlays, before and during each flood
-  river/*.png         river channel for each year, the 2027 forecast and its highlight
-  villages.geojson    7,664 settlements: name, union, upazila, district, homes, risk, chances
-  houses.geojson      homes with at least a 5% chance of river arrival within 5 years
-  river_line.geojson  the 2026 riverbank line
 src/
   pages/              Home, Floods, River (riverbank), Villages, How
-  components/         map, navigation bar, animated counters and cards
+  components/         map view, navigation bar, footer, animated cards and counters
   lib/                data loading and map helpers
+public/data/          every map layer and number the site shows (~8 MB)
+  stats.json          headline numbers, flood areas, land lost per year, forecast, test scores
+  flood/*.png         flood water, before and during each flood
+  river/*.png         the river channel each year, and the 2027 forecast
+  villages.geojson    7,664 settlements with their risk level and chances
+  houses.geojson      homes with at least a 5% chance of meeting the river within 5 years
+  river_line.geojson  the 2026 riverbank
 ```
 
-The files in `public/data/` are produced by the TeestaWatch analysis pipeline (`src/s25_web_export.py` in the analysis project). To update the website, re-run that script and copy in the new files.
-
-## Built with
-
-React 19 · TypeScript · Vite · Tailwind CSS · Framer Motion · MapLibre GL JS · Recharts · Fuse.js
+The files in `public/data/` come from `pipeline/s23_web_export.py` in the [TeestaWatch](https://github.com/AayatHossain/teestawatch) repository. To update the site, run that step and copy its output here.
 
 ## Data sources
 
 | Data | Source |
 |---|---|
-| Sentinel-1 radar | NASA ASF HyP3 |
-| Landsat and Sentinel-2 optical images | NASA Harmonized Landsat Sentinel-2 (HLS) |
-| Surface water reference | NASA/JPL OPERA DSWx |
+| Sentinel-1 radar | ESA Copernicus, processed by ASF HyP3 |
+| Optical images | NASA Harmonized Landsat Sentinel-2 (HLS) |
+| Surface water reference | NASA JPL OPERA DSWx |
 | Elevation | NASADEM |
 | Buildings | Google Open Buildings |
 | Administrative boundaries | geoBoundaries |
-| Place names | OpenStreetMap |
+| Place names | © OpenStreetMap contributors |
 | Basemap imagery and labels | © Esri, Maxar, Earthstar Geographics |
 
 ## License
 
-MIT License. See [LICENSE](LICENSE). Data sources keep their own licenses and terms (listed above).
+Code is released under the [MIT License](LICENSE). Data keeps the licences of its sources above.
